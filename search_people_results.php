@@ -28,40 +28,9 @@ $conn = getConn();
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-    ::selection {
-        background-color: lightblue;
-    }
+    
+    <link rel="stylesheet" href="style.css">
 
-    * {
-        scroll-behavior: smooth;
-        font-family: "Inter", sans-serif;
-    }
-
-    .person-card {
-        transition: all 300ms ease;
-        border: 0;
-        z-index: 1;
-    }
-
-    .person-card:hover {
-        transform: scale(1.1);
-        background-color: rgb(248, 248, 248);
-        z-index: 2;
-        transition: all 300ms ease;
-        border-radius: 1em;
-        border-right: .12em solid royalblue;
-        border-top: .12em solid royalblue;
-        border-bottom: .12em solid yellow;
-        border-left: .12em solid yellow;
-    }
-
-    .person-card:hover>div>p {
-        transform: scale(1.1);
-        transition: all 300ms ease;
-        font-weight: 900;
-    }
-    </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 

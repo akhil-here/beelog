@@ -47,6 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css">
+    
     <style>
     ::selection {
         background-color: lightblue;
