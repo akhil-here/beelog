@@ -41,131 +41,106 @@ $conn = getConn();
 
     <div class="container my-5">
         <div class="row my-5">
-            <div class="col">
-                <div class="d-flex align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
-                        class="rounded-circle shadow" width="150">
-                    <span style="flex:0.6" />
-                    <div class="mt-3 float-right">
-                        <h4 class="font-weight-bold">John Doe</h4>
-                        <!-- <p class="text-secondary mb-1">Passionate Writer....Say no to Plagiarism</p>
-                        <p class="text-muted font-size-sm mb-1">Bay Area, San Francisco, CA</p> -->
-                        <p class="text-muted font-size-sm"><strong>Followers:</strong> 1,000 <strong
-                                class="ml-3">Posts:</strong> 20
+            <?php 
+            $userid=$_GET['id'];
+            $q="select * from accounts where account_id='".$userid."'";
+            $res = $conn->query($q);
+
+            $followers = $conn->query("SELECT COUNT(p1) FROM follow WHERE p2 = '".$id."'")->fetch_assoc()['COUNT(p1)'];
+            $postcount= $conn->query("select count(*) as post_count from posts where author='".$userid."'")->fetch_assoc()['post_count'];
+            while ($row = $res->fetch_assoc())
+            echo "<div class='col'>
+                <div class='d-flex align-items-center text-center'>
+                    <img src='".$row['avatar']."' alt='Admin'
+                        class='rounded-circle shadow' width='150'>
+                    <span style='flex:0.6' />
+                    <div class='mt-3 float-right'>
+                        <h4 class='font-weight-bold'>".$row['username']."</h4>
+                        <p class='text-muted font-size-sm'><strong>Followers:</strong> ".$followers." <strong
+                                class='ml-3'>Posts:</strong> ".$postcount."
                         </p>
-                        <!-- <button class="btn btn-outline-primary">Follow</button> -->
-                        <!-- <button class="btn btn-outline-primary">Message</button> -->
-                        <button class="btn shadow font-weight-bold"
-                            style="background-color: red; color:white;">Unfollow</button>
+                        <button class='btn shadow font-weight-bold' onclick=\"location.href = 'unfollow.php?id=".$userid."'\"
+                            style='background-color: red; color:white;'>Unfollow</button>
                     </div>
                 </div>
             </div>
+            ";
+
+            
+            ?>
         </div>
+            
         <hr style="height: .12em; background-color: #eee;" class="rounded shadow-lg">
         <div class="d-flex">
             <div class="col-4 border-right">
                 <p class="text-center font-weight-bold bg-light shadow-sm p-2 rounded">Following</p>
                 <div id="friends" class="d-flex flex-wrap justify-content-between">
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
+                <?php
+                        $q = "select * from accounts where account_id in (select p2 from follow where p1 = '".$userid."')";
+                        $res = $conn->query($q);
+                        if ($res->num_rows) {
+                            while ($row = $res->fetch_assoc()) {
+                            echo "<img style='height: 2.5em;' src=\"".$row['avatar']."\"
+                                class='shadow border-0 img-thumbnail m-1' alt='Logo' data-toggle='tooltip' data-placement='top'
+                                title=\"".$row['username']."\" />";
+                            }
+                        } else {
+                            echo "Not following anybody 🍕";
+                        }
+                    ?>
 
                 </div>
             </div>
             <div class="col-8">
                 <p class="text-center font-weight-bold bg-light shadow-sm p-2 rounded">Posts</p>
                 <div id="posts">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-header">
-                            <div class="media">
-                                <img style="height: 3em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                    class="shadow-sm mr-3 rounded-circle" alt="Logo" />
-                                <div class="media-body">
-                                    <b>This is some random title</b><br>
-                                    <small>4:29 pm, Thursday, 19 November 2020 (IST)</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="p-0 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
-                                autem recusandae
-                                temporibus molestiae iusto sit aut quam accusantium qui, laborum expedita voluptates
-                                totam
-                                porro, vitae aspernatur? Nam fuga harum sint.</p>
-                        </div>
-                        <div class="card-footer bg-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="col-6">
-                                    <button class="btn">
-                                        <span class="fa fa-heart fa-fw mr-2" style="color: red;"></span>
-                                        Like
-                                    </button>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <p class="font-weight-bold m-0 p-0">First Last</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-header">
-                            <div class="media">
-                                <img style="height: 3em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                    class="shadow-sm mr-3 rounded-circle" alt="Logo" />
-                                <div class="media-body">
-                                    <b>This is some random title</b><br>
-                                    <small>4:29 pm, Thursday, 19 November 2020 (IST)</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="p-0 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
-                                autem recusandae
-                                temporibus molestiae iusto sit aut quam accusantium qui, laborum expedita voluptates
-                                totam
-                                porro, vitae aspernatur? Nam fuga harum sint.</p>
-                        </div>
-                        <div class="card-footer bg-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="col-6">
-                                    <button class="btn">
-                                        <span class="fa fa-heart fa-fw mr-2" style="color: red;"></span>
-                                        Like
-                                    </button>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <p class="font-weight-bold m-0 p-0">First Last</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                     <!-- card -->
+                     <?php 
+                    
+                    if ($_SERVER["REQUEST_METHOD"] == 'GET') {
+                        if (isset($_GET['q']) && isset($_GET['pid'])) {
+                            $sql="REPLACE INTO post_upvotes  (post, upvote_by) VALUES ('".$_GET['pid']."', '".$id."')";
+                            getConn()->query($sql);
+                        }
+                    } 
+                    
+                    // get all posts
+                    $friendId = $_GET['id'];
+                    $friendData = $conn->query("SELECT * FROM accounts WHERE account_id = '".$friendId."'")->fetch_assoc();
+
+                    $sql = "Select * from posts where author = '".$friendId."'";
+                    
+                    $res = getConn()->query($sql);
+                    if ($res->num_rows > 0) {
+                        while($_row = $res->fetch_assoc()) {
+                            echo "<div class='card blog-cards mb-4 shadow-sm'>
+                                    <div class='card-header'>
+                                        <div class='media'>
+                                            <img style='height: 3em;' src='".$friendData['avatar']."'
+                                                class='shadow-sm mr-3 rounded-circle' alt='Logo' />
+                                            <div class='media-body'>
+                                                <b>".$_row['title']."</b><br>
+                                                <small>".$_row['created']."</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='card-body'>
+                                        <p class='p-0 m-0'>".$_row['content']."</p>
+                                    </div>
+                                    <div class='card-footer bg-white'>
+                                        <div class='d-flex justify-content-between align-items-center'>
+                                            <div class='col text-right'>
+                                                <p class='font-weight-bold m-0 p-0'>".$conn->query("select username from accounts where account_id = '".$_row['author']."'")->fetch_assoc()['username']."</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>";
+                        }
+                    } else {
+                        echo "Your friend has made no posts";
+                    }
+                   ?>
+                    <!-- card end -->
                 </div>
             </div>
         </div>

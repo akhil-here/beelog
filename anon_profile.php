@@ -11,6 +11,7 @@ if ($id === NULL) {
 else{}
 
 $conn = getConn();
+
 ?>
 
 <!doctype html>
@@ -42,18 +43,29 @@ $conn = getConn();
     <div class="container">
         <div class="row mt-3">
             <div class="col py-5">
-                <div class="d-flex align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
-                        class="rounded-circle shadow" width="150">
-                    <span style="flex:0.6" />
-                    <div class="mt-3 float-right">
-                        <h4 class="font-weight-bold">John Doe</h4>
-                        <p class="text-muted font-size-sm"><strong>Followers:</strong> 1,000 <strong>Posts:</strong> 20
-                        </p>
-                        <button class="btn btn-primary font-weight-bold shadow"
-                            style="background-color: royalblue; color: yellow">Follow</button>
-                    </div>
-                </div>
+                <?php 
+                $userid=$_GET['id'];
+                $q="select * from accounts where account_id='".$userid."'";
+                $res = $conn->query($q);
+                $postcount=$conn->query("select count(*) as post_count from posts where author='".$userid."'")->fetch_assoc()['post_count'];
+                $followcount=$conn->query("select count(p1) as followers from follow where p2 = '".$id."'")->fetch_assoc()['followers'];
+                while ($row = $res->fetch_assoc())
+                {
+                    echo "<div class='d-flex align-iems-center text-center'>
+                            <img src='".$row['avatar']."' alt='Admin'
+                                class='rounded-circle shadow' width='150'>
+                            <span style='flex:0.6' />
+                            <div class='mt-3 float-right'>
+                                <h4 class='font-weight-bold'>".$row['username']."</h4>
+                                <p class='text-muted font-size-sm'><strong>Followers:</strong>".$followcount."    <strong>Posts:</strong>".$postcount."
+                                </p>
+                                <button class='btn btn-primary font-weight-bold shadow' onclick=\"location.href = 'make_follower.php?userid=".$userid."'\"
+                                    style='background-color: royalblue; color: yellow'>Follow</button>
+                            </div>
+                        </div>";
+                }
+                ?>
+                
             </div>
         </div>
         <hr style="color:black" />

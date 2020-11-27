@@ -17,6 +17,16 @@ $conn = getConn();
 
 $err = "";
 
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if ((isset($_GET['like'])) && ($_GET['like'] == 1) && (isset($_GET['pid']))) {
+        $q = "replace into post_upvotes (post, upvote_by) values ('".$_GET['pid']."', '".$id."')";
+        $conn->query($q);
+    } else if ((isset($_GET['like'])) && ($_GET['like'] == 0) && (isset($_GET['pid']))) {
+        $q = "delete from post_upvotes where (post = '".$_GET['pid']."') and (upvote_by = '".$id."')";
+        $conn->query($q);
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(!empty($_POST['title']) && !empty($_POST['content']))
     {    
@@ -111,9 +121,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div class='card-footer bg-white'>
                                         <div class='d-flex justify-content-between align-items-center'>
                                             <div class='col'>
-                                                <button class='btn'>
+                                                <button class='btn' onclick=\"location.href = 'dashboard.php?like=1&pid=".$row['post_id']."'\">
                                                     <span class='fa fa-heart fa-fw mr-2' style='color: red;'></span>
                                                     Like
+                                                </button>
+                                            </div>
+                                            <div class='col'>
+                                                <button class='btn' onclick=\"location.href = 'dashboard.php?like=0&pid=".$row['post_id']."'\">
+                                                    <span class='fa fa-trash  fa-fw mr-2' style='color: red;'></span>
+                                                    Dislike
                                                 </button>
                                             </div>
                                             <div class='col text-right'>

@@ -54,7 +54,7 @@ change pass
                         <hr style="height: .12em; background-color: #eee;" class="shadow-lg">
                         <p class="font-weight-normal">Followers: <?php print_r($conn->query("select count(p1) as followers from follow where p2 = '".$id."'")->fetch_assoc()['followers']); ?></p>
                         <p class="font-weight-normal">Posts: <?php print_r($conn->query("select count(*) as posts from posts where author = '".$id."'")->fetch_assoc()['posts']); ?></p>
-                        
+                        <p class="font-weight-normal">Upvotes: <?php print_r($conn->query("select count(*) as upvotes from post_upvotes where post in (select post_id from posts where author = '".$id."')")->fetch_assoc()['upvotes']); ?></p>
                         <hr style="height: .12em; background-color: #eee;" class="shadow-lg">
                     </div>
                     <div class="d-flex flex-column justify-content-center align-items-center">
