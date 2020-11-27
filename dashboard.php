@@ -88,10 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 <?php                     
                     // $sql1 = "select * from posts, accounts, follow where (follow.p1 = ".$id.") AND (follow.p2=accounts.account_id)";
-                    $sql1 = "select * from posts, accounts where account_id = (select p2 from follow where p1 = '".$id."')";
+                    $sql1 = "SELECT * from posts, accounts where (accounts.account_id = posts.author) and (author in (select p2 from follow where p1 = '".$id."'))";
                     $res = getConn()->query($sql1);
+                    // print_r($res);
                     if ($res->num_rows) {
                         while($row = $res->fetch_assoc()) {
+                            // print_r($row);
                             echo "<div class='card blog-cards mb-4 shadow-sm'>
                                     <div class='card-header'>
                                         <div class='media'>

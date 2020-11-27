@@ -53,11 +53,11 @@ $conn = getConn();
         <div class="list-group list-group- col-xl-8 mx-auto" id="content">
             <h4 class="py-2">Following</h4>
             <?php 
-            $q = "select * from accounts where (username like '%".$_GET['q']."%') and (account_id = (select p2 from follow where p1 = '".$id."'))";
+            $q = "SELECT * from accounts where (accounts.account_id != '".$id."') and (username like '%".$_GET['q']."%') and (accounts.account_id in (SELECT p2 from follow where p1 = '".$id."'))";
             $res = $conn->query($q);
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    echo "<div class='list-group-item btn person-card' onclick=\"location.href = ''\">
+                    echo "<div class='list-group-item btn person-card' onclick=\"location.href = 'friend_profile.php?id=".$row['account_id']."'\">
                         <div class='d-flex align-items-center'>
                             <img style='height: 5em;' src=\"".$row['avatar']."\"
                                 class='shadow-sm mr-3 rounded-circle border' alt='Logo' />
@@ -65,18 +65,17 @@ $conn = getConn();
                         </div>
                     </div>";
                 }
+            } else {
+                echo "No users";
             }
             ?>
             <h4 class="py-2">People you may follow</h4>
             <?php 
-            // $q = "select * from accounts where (username like '%".$_GET['q']."%') and (account_id != (select p2 from follow where p1 = '".$id."'))";
-
-            $q = "";
-            print_r($q);
+            $q = "SELECT * from accounts where (accounts.account_id != '".$id."') and (username like '%".$_GET['q']."%') and (accounts.account_id not IN (SELECT p2 from follow where p1 = '".$id."'))";
             $res = $conn->query($q);
             if ($res->num_rows) {
                 while ($row = $res->fetch_assoc()) {
-                    echo "<div class='list-group-item btn person-card' onclick=\"location.href = ''\">
+                    echo "<div class='list-group-item btn person-card' onclick=\"location.href = 'anon_profile.php?id=".$row['account_id']."'\">
                         <div class='d-flex align-items-center'>
                             <img style='height: 5em;' src=\"".$row['avatar']."\"
                                 class='shadow-sm mr-3 rounded-circle border' alt='Logo' />
@@ -84,6 +83,8 @@ $conn = getConn();
                         </div>
                     </div>";
                 }
+            } else {
+                echo "No users";
             }
             ?>
         </div>
