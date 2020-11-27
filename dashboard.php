@@ -99,10 +99,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php                     
                     // $sql1 = "select * from posts, accounts, follow where (follow.p1 = ".$id.") AND (follow.p2=accounts.account_id)";
                     $sql1 = "SELECT * from posts, accounts where (accounts.account_id = posts.author) and (author in (select p2 from follow where p1 = '".$id."'))";
+                    // $sql1 = "SELECT post_id, title, avatar, created, username, content, author, count(upvote_by) from posts, accounts, post_upvotes where (post_upvotes.post = posts.post_id) and (accounts.account_id = posts.author) and (author in (select p2 from follow where p1 = '".$id."'))";
                     $res = getConn()->query($sql1);
-                    // print_r($res);
+                    // print_r($res->fetch_assoc());
                     if ($res->num_rows) {
                         while($row = $res->fetch_assoc()) {
+                            $likes = getConn()->query("select count(*) as likes from post_upvotes where post = '".$row['post_id']."'")->fetch_assoc()['likes'];
+                            $like = getConn()->query("select count(*) as _like from post_upvotes where (upvote_by = '".$id."') and (post = '".$row['post_id']."')")->fetch_assoc()['_like'];
                             // print_r($row);
                             echo "<div class='card blog-cards mb-4 shadow-sm'>
                                     <div class='card-header'>
@@ -121,13 +124,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div class='card-footer bg-white'>
                                         <div class='d-flex justify-content-between align-items-center'>
                                             <div class='col'>
-                                                <button class='btn' onclick=\"location.href = 'dashboard.php?like=1&pid=".$row['post_id']."'\">
+                                                <button class='btn ".(($likes == 0) ? 'btn-success' : '')."' ".($like == 1 ? 'disabled' : '')." onclick=\"location.href = 'dashboard.php?like=1&pid=".$row['post_id']."'\">
                                                     <span class='fa fa-heart fa-fw mr-2' style='color: red;'></span>
-                                                    Like
+                                                    ".$likes." Likes
                                                 </button>
                                             </div>
                                             <div class='col'>
-                                                <button class='btn' onclick=\"location.href = 'dashboard.php?like=0&pid=".$row['post_id']."'\">
+                                                <button class='btn' ".($like == 1 ? '' : 'disabled')."  onclick=\"location.href = 'dashboard.php?like=0&pid=".$row['post_id']."'\">
                                                     <span class='fa fa-trash  fa-fw mr-2' style='color: red;'></span>
                                                     Dislike
                                                 </button>
