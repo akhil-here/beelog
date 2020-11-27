@@ -13,7 +13,12 @@ $avatar_id = array(
     'https://tunisaid.org/wp-content/uploads/2019/03/avataaars-2.png',
     'https://koolinus.files.wordpress.com/2019/03/avataaars-e28093-koolinus-1-12mar2019.png?w=640',
     'https://happyfacesparty.com/wp-content/uploads/2014/10/avataaars-Shaill.png',
-    'https://png.pngtree.com/png-clipart/20190921/original/pngtree-user-avatar-boy-png-image_4693645.jpg'
+    'https://png.pngtree.com/png-clipart/20190921/original/pngtree-user-avatar-boy-png-image_4693645.jpg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrSCJhs6gadfs7pvBTeCLuqVRqNvsRlM__6w&usqp=CAU',
+    'https://www.amongusavatarmaker.com/Assets/PLAYER/ORANGE.png',
+    'https://cdn3.iconfinder.com/data/icons/diversity-avatars-vol-2/64/captain-jack-sparrow-pirate-carribean-512.png',
+    'https://s-media-cache-ak0.pinimg.com/originals/54/0d/ca/540dcabe5f6d2bb94b5a4052ceae0df8.png',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHnv8LCaD8_7urrpxxT9AswgonrU3VqSfIFA&usqp=CAU'
 );
 
 if ($id !== NULL) {
@@ -36,4 +41,9 @@ https://tunisaid.org/wp-content/uploads/2019/03/avataaars-2.png
 https://koolinus.files.wordpress.com/2019/03/avataaars-e28093-koolinus-1-12mar2019.png?w=640
 https://happyfacesparty.com/wp-content/uploads/2014/10/avataaars-Shaill.png
 https://png.pngtree.com/png-clipart/20190921/original/pngtree-user-avatar-boy-png-image_4693645.jpg
+https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrSCJhs6gadfs7pvBTeCLuqVRqNvsRlM__6w&usqp=CAU
+https://www.amongusavatarmaker.com/Assets/PLAYER/ORANGE.png
+https://cdn3.iconfinder.com/data/icons/diversity-avatars-vol-2/64/captain-jack-sparrow-pirate-carribean-512.png
+https://s-media-cache-ak0.pinimg.com/originals/54/0d/ca/540dcabe5f6d2bb94b5a4052ceae0df8.png
+https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHnv8LCaD8_7urrpxxT9AswgonrU3VqSfIFA&usqp=CAU
 -->

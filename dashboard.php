@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </div>
                                             <div class='col'>
                                                 <button class='btn' ".($like == 1 ? '' : 'disabled')."  onclick=\"location.href = 'dashboard.php?like=0&pid=".$row['post_id']."'\">
-                                                    <span class='fa fa-trash  fa-fw mr-2' style='color: red;'></span>
+                                                    <span class='fa  fa-hand-o-down  fa-fw mr-2' style='color: red;'></span>
                                                     Dislike
                                                 </button>
                                             </div>
