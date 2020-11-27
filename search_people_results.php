@@ -8,7 +8,6 @@ $id = $auth->check();
 if ($id === NULL) {
     header("Location: login.php");
 }
-else{}
 
 $conn = getConn();
 
@@ -39,40 +38,54 @@ $conn = getConn();
     <title>Search results</title>
 </head>
 
-<body>
+<body class="swing-in-top-fwd">
 
     <?php include 'nav.php';?>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb rounded-0">
-            <li class="breadcrumb-item"><a href="#">Search</a></li>
+            <li class="breadcrumb-item"><a href="search_people.php">Search</a></li>
             <li class="breadcrumb-item active" aria-current="page">Results</li>
         </ol>
     </nav>
 
-    <div class="container">
+    <div class="container py-5">
         <p class="text-center h4 pb-4" style="font-weight: 900;">Search results</p>
         <div class="list-group list-group- col-xl-8 mx-auto" id="content">
-            <div class="list-group-item btn person-card">
-                <div class="d-flex align-items-center">
-                    <img style="height: 5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow-sm mr-3 rounded-circle border" alt="Logo" />
-                    <p class="pt-3 px-2">First Last</p>
-                </div>
-            </div>
-            <div class="list-group-item btn person-card">
-                <div class="d-flex align-items-center">
-                    <img style="height: 5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow-sm mr-3 rounded-circle border" alt="Logo" />
-                    <p class="pt-3 px-2">First Last</p>
-                </div>
-            </div>
-            <div class="list-group-item btn person-card">
-                <div class="d-flex align-items-center">
-                    <img style="height: 5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow-sm mr-3 rounded-circle border" alt="Logo" />
-                    <p class="pt-3 px-2">First Last</p>
-                </div>
-            </div>
+            <h4 class="py-2">Following</h4>
+            <?php 
+            $q = "select * from accounts where (username like '%".$_GET['q']."%') and (account_id = (select p2 from follow where p1 = '".$id."'))";
+            $res = $conn->query($q);
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    echo "<div class='list-group-item btn person-card' onclick=\"location.href = ''\">
+                        <div class='d-flex align-items-center'>
+                            <img style='height: 5em;' src=\"".$row['avatar']."\"
+                                class='shadow-sm mr-3 rounded-circle border' alt='Logo' />
+                            <p class='pt-3 px-2'>".$row['username']."</p>
+                        </div>
+                    </div>";
+                }
+            }
+            ?>
+            <h4 class="py-2">People you may follow</h4>
+            <?php 
+            // $q = "select * from accounts where (username like '%".$_GET['q']."%') and (account_id != (select p2 from follow where p1 = '".$id."'))";
+
+            $q = "";
+            print_r($q);
+            $res = $conn->query($q);
+            if ($res->num_rows) {
+                while ($row = $res->fetch_assoc()) {
+                    echo "<div class='list-group-item btn person-card' onclick=\"location.href = ''\">
+                        <div class='d-flex align-items-center'>
+                            <img style='height: 5em;' src=\"".$row['avatar']."\"
+                                class='shadow-sm mr-3 rounded-circle border' alt='Logo' />
+                            <p class='pt-3 px-2'>".$row['username']."</p>
+                        </div>
+                    </div>";
+                }
+            }
+            ?>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-<div class="bg-white">
+<div class="bg-white sticky-top">
     <nav class="navbar navbar-expand-lg shadow-sm">
         <div class="navbar-brand">
             <h1 style="font-weight: 900; color: royalblue; background-color: yellow">

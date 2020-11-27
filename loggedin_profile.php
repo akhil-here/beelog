@@ -37,167 +37,106 @@ change pass
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="swing-in-top-fwd">
     <?php include 'nav.php';?>
-    <div class="container-fluid my-5">
+    <div class="container-fluid py-5">
         <div class="row">
             <div class="col-3 text-center ">
                 <p class="text-center font-weight-bold bg-light shadow-sm p-2 rounded mb-5">You</p>
-                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                <img src=<?php echo $auth->getInfo()['avatar'];?> alt="Admin"
                     class="rounded-circle shadow-sm" width="150">
                 <div class="pt-2">
-                    <h5 class="font-weight-bold">Vighnesh Naik</h5>
-                    <p class="font-weight-">vighnesh.naik@somaiya.edu</p>
+                    <h5 class="font-weight-bold"><?php echo $auth->getInfo()['username']?></h5>
+                    <p class="font-weight-"><?php echo $auth->getInfo()['email']?></p>
                 </div>
 
                 <div class="text-left">
                     <hr style="height: .12em; background-color: #eee;" class="shadow-lg">
-                    <p class="font-weight-normal">Followers: 17</p>
-                    <p class="font-weight-normal">Posts: 23</p>
-                    <p class="font-weight-normal">Upvotes: 23</p>
+                    <p class="font-weight-normal">Followers: <?php print_r($conn->query("select count(p1) as followers from follow where p2 = '".$id."'")->fetch_assoc()['followers']); ?></p>
+                    <p class="font-weight-normal">Posts: <?php print_r($conn->query("select count(*) as posts from posts where author = '".$id."'")->fetch_assoc()['posts']); ?></p>
+                    <p class="font-weight-normal">Upvotes: <?php print_r($conn->query("select count(*) as upvotes from post_upvotes where post = (select post_id from posts where author = '".$id."')")->fetch_assoc()['upvotes']); ?></p>
                     <hr style="height: .12em; background-color: #eee;" class="shadow-lg">
                 </div>
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    <button type="button" class="btn d-block my-2 btn-light shadow">Change Avatar</button>
-                    <button type="button" class="btn d-block my-2 btn-secondary shadow">Change Password</button>
+                <?php include('change_avatar.php');?>
+                    <button type="button" class="btn d-block my-2 btn-light shadow" data-toggle="modal" data-target="#change-avatar-modal">Change Avatar</button>
+                    <button type="button" class="btn d-block my-2 btn-secondary shadow" onclick="location.href = 'changepass.php'">Change Password</button>
                 </div>
 
             </div>
             <div class="col-7 text-">
                 <p class="text-center font-weight-bold bg-light shadow-sm p-2 rounded ">Posts</p>
                 <div class="container my-5">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-header">
-                            <div class="media">
-                                <img style="height: 3em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                    class="shadow-sm mr-3 rounded-circle" alt="Logo" />
-                                <div class="media-body">
-                                    <b>This is some random title</b><br>
-                                    <small>4:29 pm, Thursday, 19 November 2020 (IST)</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="p-0 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
-                                autem recusandae
-                                temporibus molestiae iusto sit aut quam accusantium qui, laborum expedita voluptates
-                                totam
-                                porro, vitae aspernatur? Nam fuga harum sint.</p>
-                        </div>
-                        <div class="card-footer bg-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="col-6">
-                                    <button class="btn">
-                                        <span class="fa fa-heart fa-fw mr-2" style="color: red;"></span>
-                                        Like
-                                    </button>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <p class="font-weight-bold m-0 p-0">First Last</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-header">
-                            <div class="media">
-                                <img style="height: 3em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                    class="shadow-sm mr-3 rounded-circle" alt="Logo" />
-                                <div class="media-body">
-                                    <b>This is some random title</b><br>
-                                    <small>4:29 pm, Thursday, 19 November 2020 (IST)</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="p-0 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
-                                autem recusandae
-                                temporibus molestiae iusto sit aut quam accusantium qui, laborum expedita voluptates
-                                totam
-                                porro, vitae aspernatur? Nam fuga harum sint.</p>
-                        </div>
-                        <div class="card-footer bg-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="col-6">
-                                    <button class="btn">
-                                        <span class="fa fa-heart fa-fw mr-2" style="color: red;"></span>
-                                        Like
-                                    </button>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <p class="font-weight-bold m-0 p-0">First Last</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-header">
-                            <div class="media">
-                                <img style="height: 3em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                    class="shadow-sm mr-3 rounded-circle" alt="Logo" />
-                                <div class="media-body">
-                                    <b>This is some random title</b><br>
-                                    <small>4:29 pm, Thursday, 19 November 2020 (IST)</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <p class="p-0 m-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
-                                autem recusandae
-                                temporibus molestiae iusto sit aut quam accusantium qui, laborum expedita voluptates
-                                totam
-                                porro, vitae aspernatur? Nam fuga harum sint.</p>
-                        </div>
-                        <div class="card-footer bg-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="col-6">
-                                    <button class="btn">
-                                        <span class="fa fa-heart fa-fw mr-2" style="color: red;"></span>
-                                        Like
-                                    </button>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <p class="font-weight-bold m-0 p-0">First Last</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <!-- card -->
+                    <?php 
+                    
+                    if ($_SERVER["REQUEST_METHOD"] == 'GET') {
+                        if (isset($_GET['q']) && isset($_GET['pid'])) {
+                            $sql="DELETE FROM posts WHERE post_id='".$_GET['pid']."'";
+                            getConn()->query($sql);
+                        }
+                    } 
+                    
+                    // get all posts
+                    $sql = "Select * from posts where author = '".$id."'";
+                    $res = getConn()->query($sql);
+                    // print_r($res);
+                    if ($res->num_rows > 0) {
+                        while($row = $res->fetch_assoc()) {
+                            echo "<div class='card blog-cards mb-4 shadow-sm'>
+                                    <div class='card-header'>
+                                        <div class='media'>
+                                            <img style='height: 3em;' src='".$auth->getInfo()['avatar']."'
+                                                class='shadow-sm mr-3 rounded-circle' alt='Logo' />
+                                            <div class='media-body'>
+                                                <b>".$row['title']."</b><br>
+                                                <small>".$row['created']."</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='card-body'>
+                                        <p class='p-0 m-0'>".$row['content']."</p>
+                                    </div>
+                                    <div class='card-footer bg-white'>
+                                        <div class='d-flex justify-content-between align-items-center'>
+                                            <div class='col text-left'>
+                                                <button class='btn' onclick=\"location.href = 'loggedin_profile.php?q=delete&pid=".$row['post_id']."'\">
+                                                    <span class='fa fa-trash fa-fw mr-2' style='color: black;'></span>
+                                                    Delete
+                                                </button>
+                                            </div>
+                                            <div class='col text-right'>
+                                                <p class='font-weight-bold m-0 p-0'>".$auth->getInfo()['username']."</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>";
+                        }
+                    } else {
+                        echo "You've made no posts";
+                    }
+                   ?>
+                    <!-- card end -->
+                    
                 </div>
             </div>
             <div class="col-md-2">
                 <p class="text-center font-weight-bold bg-light shadow-sm p-2 rounded mb-5">Following</p>
                 <div id="friends" class="d-flex flex-wrap justify-content-between">
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-                    <img style="height: 2.5em;" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        class="shadow border-0 img-thumbnail m-1" alt="Logo" data-toggle="tooltip" data-placement="top"
-                        title="First Last" />
-
+                    <?php
+                        $q = "select * from accounts where account_id = (select p2 from follow where p1 = '".$id."')";
+                        $res = $conn->query($q);
+                        if ($res->num_rows) {
+                            while ($row = $res->fetch_assoc()) {
+                            echo "<img style='height: 2.5em;' src=\"".$row['avatar']."\"
+                                class='shadow border-0 img-thumbnail m-1' alt='Logo' data-toggle='tooltip' data-placement='top'
+                                title=\"".$row['username']."\" />";
+                            }
+                        } else {
+                            echo "Not following anybody 🍕";
+                        }
+                    ?>
                 </div>
 
             </div>

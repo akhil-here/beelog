@@ -8,7 +8,6 @@ $id = $auth->check();
 if ($id === NULL) {
     header("Location: login.php");
 }
-else{}
 
 
 ?>
@@ -38,12 +37,12 @@ else{}
     <title>Search people</title>
 </head>
 
-<body>
+<body class="swing-in-top-fwd">
 
     <?php include 'nav.php';?>
 
     <div class="container-fluid mx-auto vh-100 d-flex justify-content-center position-fixed align-items-center">
-        <form action="/miniproject/_/search_people_results.php" class="col mb-5">
+        <form action="search_people_results.php" class="col mb-5">
             <div class="form-group py-5 text-center col-6 mx-auto">
                 <p class="typewriter h1 shadow" style="font-weight: 700; color: royalblue; background-color: yellow;">
                     make new

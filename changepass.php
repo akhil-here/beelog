@@ -1,40 +1,33 @@
 <?php
+include('auth.php');
 
-if (!isset($_COOKIE["BS"])) {
-    header("Location: /miniproject/_/login.php");
+$auth = new Account();
+
+$id = $auth->check();
+
+if ($id === NULL) {
+    header("Location: login.php");
 }
 
-$user = $_COOKIE["BS"];
+$conn = getConn();
 
-session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "beelog";
-
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $oldpass = $_POST["oldPassword"];
     $newpass = $_POST["newPassword"];
-    $sql = "SELECT username, password FROM userdata WHERE username='$user'";
+    $sql = "SELECT username, password FROM accounts WHERE account_id='$id'";
     $result = $conn->query($sql);
-    
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-                if (strcmp($row["password"], $oldpass) !== 0) {
+                if (!password_verify($oldpass, $row["password"])) {
                     echo "Incorrect old password";
                 } else {
-                    $update="UPDATE userdata SET password='".$_POST['newPassword']."' WHERE username= '$user'";
+                    $update="UPDATE accounts SET password='".password_hash($_POST['newPassword'], PASSWORD_DEFAULT)."' WHERE account_id= '$id'";
                     if($conn->query($update)){
-                         echo "Password changed";
+                         echo "<script>alert ('Password changed')</script>;";
                     } else {
-                        echo "Error changing password";
+                        echo "<script>alert ('Error Changing Password')</script>;";
                     }
             }
         }
@@ -63,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 
-<body>
+<body class="swing-in-top-fwd">
     <?php include 'nav.php';?>
 
     <div class="container my-5">
