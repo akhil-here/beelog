@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>";
                         }
                     } else {
-                        echo "You've made no posts";
+                        echo "<center>The <mark>Beelogers</mark> you follow haven't made no posts</center>";
                     }
                 ?>
 

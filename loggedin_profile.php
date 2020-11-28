@@ -113,7 +113,7 @@ change pass
                                 </div>";
                         }
                     } else {
-                        echo "You've made no posts";
+                        echo "<center>You've made no posts</center>";
                     }
                    ?>
                     <!-- card end -->
